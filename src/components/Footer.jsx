@@ -10,7 +10,7 @@ import {
 
 export default function Footer() {
   return (
-    <footer className="py-8 text-color-dark bg-color-secondary">
+    <footer className="py-8 text-white bg-gray-800">
       <div className="container flex flex-col items-center justify-between mx-auto space-y-8 md:flex-row md:space-y-0">
         {/* Logo and Description */}
         <div className="w-full text-center md:w-auto md:text-left">
@@ -21,7 +21,7 @@ export default function Footer() {
             width={200}
             height={20}
           />
-          <p className="mt-2 text-sm text-black">
+          <p className="mt-2 text-sm ">
             helps you find various types of amazing tourist destinations to meet
             your adventure and travel needs.
           </p>
@@ -32,20 +32,17 @@ export default function Footer() {
           <h3 className="mb-2 text-xl font-semibold">Quick Links</h3>
           <ul className="space-y-2">
             <li>
-              <Link to="/" className="text-black hover:text-blue-400">
+              <Link to="/" className=" hover:text-blue-400">
                 Home
               </Link>
             </li>
             <li>
-              <Link
-                to="/destination"
-                className="text-black hover:text-blue-400"
-              >
+              <Link to="/destination" className=" hover:text-blue-400">
                 Destination
               </Link>
             </li>
             <li>
-              <Link to="/login" className="text-black hover:text-blue-400">
+              <Link to="/login" className=" hover:text-blue-400">
                 Login
               </Link>
             </li>
@@ -109,7 +106,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="pt-4 mt-8 border-t border-gray-700">
-        <p className="text-sm text-center text-gray-500">
+        <p className="text-sm text-center">
           © {new Date().getFullYear()} ExploreBali. All rights reserved.
         </p>
       </div>

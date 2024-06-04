@@ -10,7 +10,7 @@ export default function NavBar() {
           <Link to="/" className="text-white hover:text-gray-400">
             Home
           </Link>
-          <Link to="/destination" className="text-white hover:text-gray-400">
+          <Link to="/destinations" className="text-white hover:text-gray-400">
             Destination
           </Link>
           <Link to="/login" className="text-white hover:text-gray-400">

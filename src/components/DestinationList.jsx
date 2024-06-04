@@ -6,18 +6,16 @@ export default function DestinationList({ api }) {
       {api?.data?.Destination?.map((destination, index) => (
         <a
           href={`/destinations/${destination.id}`}
-          className="relative block overflow-hidden transition-all rounded shadow-lg cursor-pointer text-color-primary hover:text-color-orange"
+          className="relative block overflow-hidden text-white transition-all rounded shadow-lg cursor-pointer hover:text-blue-500"
           key={index}
         >
           <div className="relative h-full">
             <img
               src={destination.img}
               alt={destination.name}
-              width={200}
-              height={300}
-              className="object-cover w-full rounded max-h-96"
+              className="object-cover w-full rounded h-96" // Set a fixed height and use object-cover
             />
-            <div className="absolute bottom-0 left-0 w-full h-24 p-4 font-bold bg-color-dark bg-opacity-80 md:text-xl">
+            <div className="absolute bottom-0 left-0 w-full h-24 p-4 font-bold bg-black bg-opacity-80 md:text-xl">
               {destination.name}
             </div>
           </div>

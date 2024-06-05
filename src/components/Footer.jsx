@@ -41,11 +41,6 @@ export default function Footer() {
                 Destination
               </Link>
             </li>
-            <li>
-              <Link to="/login" className=" hover:text-blue-400">
-                Login
-              </Link>
-            </li>
           </ul>
         </div>
 

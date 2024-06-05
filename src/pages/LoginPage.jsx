@@ -114,7 +114,7 @@ const LoginPage = () => {
             onClick={() => setIsLogin(!isLogin)}
             className="w-full px-4 py-2 mt-4 text-white transition duration-200 bg-gray-600 rounded hover:bg-gray-700"
           >
-            {isLogin ? "Switch to Register" : "Switch to Login"}
+            {isLogin ? "Switch to Register" : "Login"}
           </button>
         </form>
       </div>

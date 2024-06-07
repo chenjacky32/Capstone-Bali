@@ -27,23 +27,6 @@ export default function Footer() {
           </p>
         </div>
 
-        {/* Navigation Links */}
-        <div className="text-center md:text-left">
-          <h3 className="mb-2 text-xl font-semibold">Quick Links</h3>
-          <ul className="space-y-2">
-            <li>
-              <Link to="/" className=" hover:text-blue-400">
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link to="/destination" className=" hover:text-blue-400">
-                Destination
-              </Link>
-            </li>
-          </ul>
-        </div>
-
         {/* Contact Information */}
         <div className="text-center md:text-left">
           <h3 className="mb-2 text-xl font-semibold">Contact Us</h3>

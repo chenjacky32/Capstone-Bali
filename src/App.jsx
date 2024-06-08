@@ -1,13 +1,13 @@
 // src/App.js
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import PrivateRouter from "./utils/PrivateRoute";
+import PrivateRoute from "./utils/PrivateRoute";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import HomePage from "./pages/HomePage";
 import DestinationPage from "./pages/DestinationPage";
 import LoginPage from "./pages/LoginPage";
-// import DashboardPage from "./pages/DashboardPage";
+import DashboardPage from "./pages/DashboardPage";
 import DetailPage from "./pages/DetailPage";
 
 export default function App() {
@@ -20,7 +20,14 @@ export default function App() {
           <Route path="/destinations" element={<DestinationPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/destinations/:id" element={<DetailPage />} />
-          {/*<PrivateRouter path="/dashboard" component={DashboardPage} />*/}
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <DashboardPage />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </main>
       <Footer />

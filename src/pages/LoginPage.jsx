@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
@@ -10,7 +10,13 @@ const LoginPage = () => {
   const [isLogin, setIsLogin] = useState(true); // Add this to toggle between login and register
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { logIn } = useContext(AuthContext); // Access the logIn function
+  const { isLoggedIn, logIn } = useContext(AuthContext); // Access the isLoggedIn and logIn function
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/destinations"); // Redirect to another page if logged in
+    }
+  }, [isLoggedIn, navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();

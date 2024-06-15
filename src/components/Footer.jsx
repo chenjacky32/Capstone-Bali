@@ -15,13 +15,12 @@ export default function Footer() {
       <div className="container flex flex-col items-center justify-between mx-auto space-y-8 md:flex-row md:space-y-0">
         {/* Logo and Description */}
         <div className="w-full text-center md:w-auto md:text-left">
-          <img
-            src="/assets/header-logo.png"
-            alt="Header Logo"
-            className="mx-auto md:mx-0"
-            width={200}
-            height={20}
-          />
+          <Link
+            to="/"
+            className="flex items-center text-xl font-semibold text-white"
+          >
+            Explore Bali
+          </Link>
           <p className="max-w-xs mx-auto mt-2 text-base md:mx-0">
             Helps you find various types of amazing tourist destinations to meet
             your adventure and travel needs.

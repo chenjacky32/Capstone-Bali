@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faHome,
   faMapMarkedAlt,
   faUser,
   faSignInAlt,
@@ -25,11 +24,7 @@ export default function NavBar() {
       <div className="container mx-auto">
         <div className="flex flex-col items-center justify-between lg:flex-row">
           <div className="mb-4 text-2xl font-bold text-white lg:mb-0">
-            <Link
-              to="/"
-              className="flex items-center text-white hover:text-yellow-300"
-            >
-              <FontAwesomeIcon icon={faHome} className="mr-2" />
+            <Link to="/" className="flex items-center text-white">
               Explore Bali
             </Link>
           </div>
@@ -51,7 +46,7 @@ export default function NavBar() {
                 to="/destinations"
                 className="flex items-center text-white hover:text-yellow-300"
               >
-                <FontAwesomeIcon icon={faMapMarkedAlt} className="mr-2" />
+                <FontAwesomeIcon icon={faMapMarkedAlt} className="mr-3" />
                 Destination
               </Link>
               {isLoggedIn ? (
@@ -59,7 +54,7 @@ export default function NavBar() {
                   to="/dashboard"
                   className="flex items-center text-white hover:text-yellow-300"
                 >
-                  <FontAwesomeIcon icon={faUser} className="mr-2" />
+                  <FontAwesomeIcon icon={faUser} className="mr-4" />
                   Dashboard
                 </Link>
               ) : (
@@ -67,7 +62,7 @@ export default function NavBar() {
                   to="/login"
                   className="flex items-center text-white hover:text-yellow-300"
                 >
-                  <FontAwesomeIcon icon={faSignInAlt} className="mr-2" />
+                  <FontAwesomeIcon icon={faSignInAlt} className="mr-4" />
                   Login
                 </Link>
               )}

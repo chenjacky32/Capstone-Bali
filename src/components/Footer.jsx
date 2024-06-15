@@ -17,7 +17,7 @@ export default function Footer() {
         <div className="w-full text-center md:w-auto md:text-left">
           <Link
             to="/"
-            className="flex items-center text-xl font-semibold text-white"
+            className="flex items-center justify-center text-xl font-semibold text-white md:justify-start"
           >
             Explore Bali
           </Link>
@@ -57,7 +57,7 @@ export default function Footer() {
               href="https://facebook.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white"
+              className="text-white hover:text-yellow-400"
             >
               <FaFacebook size={24} />
             </a>
@@ -65,7 +65,7 @@ export default function Footer() {
               href="https://twitter.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white"
+              className="text-white hover:text-yellow-400"
             >
               <FaTwitter size={24} />
             </a>
@@ -73,7 +73,7 @@ export default function Footer() {
               href="https://instagram.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white"
+              className="text-white hover:text-yellow-400"
             >
               <FaInstagram size={24} />
             </a>
@@ -81,7 +81,7 @@ export default function Footer() {
               href="https://linkedin.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white"
+              className="text-white hover:text-yellow-400"
             >
               <FaLinkedin size={24} />
             </a>
@@ -89,7 +89,7 @@ export default function Footer() {
               href="https://youtube.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white"
+              className="text-white hover:text-yellow-400"
             >
               <FaYoutube size={24} />
             </a>

@@ -1,6 +1,6 @@
-// components/DestinationList.jsx
 import React from "react";
-import { HiLocationMarker } from "react-icons/hi"; // Import location marker icon
+import { HiLocationMarker } from "react-icons/hi";
+import { FaStar } from "react-icons/fa";
 
 export default function DestinationList({ api, displayMode }) {
   return (
@@ -28,6 +28,10 @@ export default function DestinationList({ api, displayMode }) {
             <div className="absolute top-0 right-0 flex items-center px-2 space-x-2 rounded bg-gradient-to-r from-purple-600 to-blue-500">
               <HiLocationMarker className="text-lg text-white" />
               <p className="text-white">{destination.location}</p>
+            </div>
+            <div className="absolute right-0 flex items-center px-2 space-x-2 bg-yellow-600 top-7">
+              <FaStar className="text-lg text-white" />
+              <p className="text-white">{destination.avgRating}</p>
             </div>
             <div
               className={`absolute bottom-0 left-0 w-full h-24 p-4 font-bold bg-black bg-opacity-80 md:text-xl ${

@@ -3,7 +3,7 @@ import React from "react";
 export default function DestinationList({ api }) {
   return (
     <div className="grid grid-cols-2 gap-4 px-4 mx-auto mb-8 max-w-screen-2xl sm:grid-cols-3 md:grid-cols-5">
-      {api?.data?.Destination?.map((destination, index) => (
+      {api.map((destination, index) => (
         <a
           href={`/destinations/${destination.id}`}
           className="relative block overflow-hidden text-white transition-all rounded shadow-lg cursor-pointer hover:text-blue-500"

@@ -8,8 +8,12 @@ export default function DestinationPage() {
 
   useEffect(() => {
     async function fetchData() {
-      const data = await getDestinationResponse("destinations");
-      setListDestination(data);
+      const response = await getDestinationResponse("destinations");
+      if (response.status === "success") {
+        setListDestination(response.data.destinations); // Adjust to the current response structure
+      } else {
+        console.error("Failed to fetch destinations:", response.message);
+      }
     }
 
     fetchData();

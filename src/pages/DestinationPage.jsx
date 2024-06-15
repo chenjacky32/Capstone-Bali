@@ -27,11 +27,7 @@ export default function DestinationPage() {
     <>
       {/* Destination list */}
       <section>
-        <Header
-          title="Destinations"
-          linkTitle="See All Destinations"
-          linkHref="/destinations"
-        />
+        <Header title="Destinations" />
         <DestinationList api={listDestination} />
       </section>
     </>

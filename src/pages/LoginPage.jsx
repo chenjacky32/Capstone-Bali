@@ -22,10 +22,13 @@ const LoginPage = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:3000/login", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_REACT_APP_API_KEY}/login`,
+        {
+          email,
+          password,
+        }
+      );
 
       if (response.data.status === "success") {
         localStorage.setItem("accessToken", response.data.data.accessToken);
@@ -43,11 +46,14 @@ const LoginPage = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:3000/register", {
-        name,
-        email,
-        password,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_REACT_APP_API_KEY}/register`,
+        {
+          name,
+          email,
+          password,
+        }
+      );
 
       if (response.data.status === "success") {
         setIsLogin(true);

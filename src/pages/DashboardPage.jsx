@@ -16,11 +16,14 @@ export default function DashboardPage() {
     const fetchUserDetails = async () => {
       try {
         const accessToken = localStorage.getItem("accessToken");
-        const response = await fetch("http://localhost:3000/users/me", {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
+        const response = await fetch(
+          `${import.meta.env.VITE_REACT_APP_API_KEY}/users/me`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
         const data = await response.json();
         if (data.status === "success") {
           setName(data.data.name);

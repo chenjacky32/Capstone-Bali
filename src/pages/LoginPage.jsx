@@ -2,8 +2,9 @@ import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { AiOutlineArrowLeft } from "react-icons/ai"; // Import the arrow left icon
 
-const LoginPage = () => {
+export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState(""); // Add this for the register form
@@ -69,6 +70,15 @@ const LoginPage = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-600 to-blue-500">
       <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
+        {/* Navigation back to /destinations */}
+        <button
+          onClick={() => navigate("/destinations")}
+          className="absolute p-10 text-white hover:text-yellow-300 top-4 left-4"
+        >
+          <AiOutlineArrowLeft className="inline-block mr-2 text-xl" />
+          Back to Destinations
+        </button>
+        {/* End navigation button */}
         <h2 className="mb-6 text-3xl font-bold text-center text-gray-900">
           {isLogin ? "Login" : "Register"}
         </h2>
@@ -121,17 +131,33 @@ const LoginPage = () => {
           >
             {isLogin ? "Login" : "Register"}
           </button>
+          {/* Conditionally render the "Don't have an account?" and "Already have an account?" text */}
+          {isLogin && (
+            <p className="mt-4 text-center text-gray-700">
+              Don't have an account?{" "}
+              <button
+                type="button"
+                onClick={() => setIsLogin(false)}
+                className="text-purple-600 hover:underline focus:outline-none"
+              >
+                Register Now
+              </button>
+            </p>
+          )}
+          {!isLogin && (
+            <p className="mt-4 text-center text-gray-700">
+              Already have an account?{" "}
+              <button
+                type="button"
+                onClick={() => setIsLogin(true)}
+                className="text-purple-600 hover:underline focus:outline-none"
+              >
+                Login Now
+              </button>
+            </p>
+          )}
         </form>
-        <button
-          type="button"
-          onClick={() => setIsLogin(!isLogin)}
-          className="w-full px-4 py-2 mt-4 text-white transition duration-200 bg-gray-600 rounded hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600"
-        >
-          {isLogin ? "Switch to Register" : "Switch to Login"}
-        </button>
       </div>
     </div>
   );
-};
-
-export default LoginPage;
+}

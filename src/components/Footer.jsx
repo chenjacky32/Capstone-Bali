@@ -1,6 +1,6 @@
 // components/Footer.jsx
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   FaFacebook,
   FaTwitter,
@@ -10,6 +10,13 @@ import {
 } from "react-icons/fa";
 
 export default function Footer() {
+  const location = useLocation();
+
+  // Check if current path is '/login'
+  if (location.pathname === "/login") {
+    return null; // Return null to render nothing when on the login page
+  }
+
   return (
     <footer className="py-8 text-white bg-gradient-to-r from-purple-600 to-blue-500">
       <div className="container flex flex-col items-center justify-between mx-auto space-y-8 md:flex-row md:space-y-0">

@@ -1,6 +1,6 @@
 // components/NavBar.jsx
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -14,6 +14,13 @@ import {
 export default function NavBar() {
   const { isLoggedIn } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
+
+  const location = useLocation();
+
+  // Check if current path is '/login'
+  if (location.pathname === "/login") {
+    return null; // Return null to render nothing when on the login page
+  }
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);

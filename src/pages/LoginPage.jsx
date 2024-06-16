@@ -67,9 +67,9 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-8 bg-white border border-gray-300 rounded-lg">
-        <h2 className="mb-6 text-2xl font-bold text-gray-900">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-600 to-blue-500">
+      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
+        <h2 className="mb-6 text-3xl font-bold text-center text-gray-900">
           {isLogin ? "Login" : "Register"}
         </h2>
         {error && <div className="mb-4 text-red-600">{error}</div>}
@@ -84,7 +84,7 @@ const LoginPage = () => {
                 id="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded"
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-600"
                 required
               />
             </div>
@@ -98,7 +98,7 @@ const LoginPage = () => {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-600"
               required
             />
           </div>
@@ -111,24 +111,24 @@ const LoginPage = () => {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-600"
               required
             />
           </div>
           <button
             type="submit"
-            className="w-full px-4 py-2 text-white transition duration-200 bg-blue-600 rounded hover:bg-blue-700"
+            className="w-full px-4 py-2 text-white transition duration-200 rounded bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-purple-600"
           >
             {isLogin ? "Login" : "Register"}
           </button>
-          <button
-            type="button"
-            onClick={() => setIsLogin(!isLogin)}
-            className="w-full px-4 py-2 mt-4 text-white transition duration-200 bg-gray-600 rounded hover:bg-gray-700"
-          >
-            {isLogin ? "Switch to Register" : "Login"}
-          </button>
         </form>
+        <button
+          type="button"
+          onClick={() => setIsLogin(!isLogin)}
+          className="w-full px-4 py-2 mt-4 text-white transition duration-200 bg-gray-600 rounded hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600"
+        >
+          {isLogin ? "Switch to Register" : "Switch to Login"}
+        </button>
       </div>
     </div>
   );

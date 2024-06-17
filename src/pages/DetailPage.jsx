@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { bookmarkDestination, unbookmarkDestination } from "../libs/api";
+import {
+  bookmarkDestination,
+  unbookmarkDestination,
+  getDestinationResponse,
+  getBookmarkedDestinations,
+} from "../libs/api";
 import { AuthContext } from "../context/AuthContext";
 import LoadingSpinner from "../components/LoadingSpinner";
 
@@ -8,35 +13,43 @@ const DetailPage = () => {
   const { id } = useParams();
   const [destination, setDestination] = useState(null);
   const [isBookmarked, setIsBookmarked] = useState(false);
-  const [isLoading, setIsLoading] = useState(true); // State to track loading
+  const [isLoading, setIsLoading] = useState(true);
   const { isLoggedIn } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchDestination = async () => {
-      // Simulate delay for 1 second
-      setTimeout(async () => {
-        try {
-          const response = await fetch(
-            `${import.meta.env.VITE_REACT_APP_API_KEY}/destinations/${id}`
-          );
-          const data = await response.json();
-
-          if (data.status === "success") {
-            setDestination(data.data);
-            setIsBookmarked(data.data.isBookmarked); // Assuming `isBookmarked` is part of the response data
-          } else {
-            console.error(data.message);
-          }
-        } catch (error) {
-          console.error("An error occurred while fetching the destination.");
-        } finally {
-          setIsLoading(false); // Set loading to false once data is fetched (success or error)
+      try {
+        // Fetch destination details
+        const response = await getDestinationResponse(`destinations/${id}`);
+        if (response.status === "success") {
+          setDestination(response.data);
+        } else {
+          console.error(response.message);
         }
-      }, 1000); // Delay of 1 second (1000 milliseconds)
+
+        if (isLoggedIn) {
+          // Fetch user's bookmarked destinations
+          const token = localStorage.getItem("accessToken");
+          if (token) {
+            const bookmarkedResponse = await getBookmarkedDestinations(token);
+            if (bookmarkedResponse.status === "success") {
+              // Check if the current destination is bookmarked
+              const bookmarked = bookmarkedResponse.data.Bookmarks.some(
+                (bookmark) => bookmark.dest_id === id
+              );
+              setIsBookmarked(bookmarked);
+            }
+          }
+        }
+      } catch (error) {
+        console.error("An error occurred while fetching the destination.");
+      } finally {
+        setIsLoading(false); // Set loading to false once data is fetched (success or error)
+      }
     };
 
     fetchDestination();
-  }, [id]);
+  }, [id, isLoggedIn]);
 
   const handleBookmark = async () => {
     const token = localStorage.getItem("accessToken");
@@ -51,7 +64,7 @@ const DetailPage = () => {
         : await bookmarkDestination(id, token);
 
       if (response.status === "success") {
-        setIsBookmarked(!isBookmarked);
+        setIsBookmarked(!isBookmarked); // Toggle bookmark status
       } else {
         console.error(response.message);
       }
@@ -98,7 +111,7 @@ const DetailPage = () => {
                   : "bg-gradient-to-r from-purple-600 to-blue-500"
               }`}
             >
-              {isBookmarked ? "Remove Bookmark" : "Add Bookmark"}
+              {isBookmarked ? "Remove Bookmark" : "Add to Bookmark"}
             </button>
           )}
         </div>

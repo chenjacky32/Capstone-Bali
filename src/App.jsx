@@ -11,6 +11,7 @@ const DestinationPage = React.lazy(() => import("./pages/DestinationPage"));
 const LoginPage = React.lazy(() => import("./pages/LoginPage"));
 const DashboardPage = React.lazy(() => import("./pages/DashboardPage"));
 const DetailPage = React.lazy(() => import("./pages/DetailPage"));
+const NotFoundPage = React.lazy(() => import("./pages/NotFoundPage"));
 
 export default function App() {
   return (
@@ -32,6 +33,8 @@ export default function App() {
                 </PrivateRoute>
               }
             />
+            {/* Add the NotFoundPage as the last Route */}
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Suspense>
       </main>

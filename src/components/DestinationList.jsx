@@ -11,7 +11,7 @@ export default function DestinationList({ api, displayMode }) {
           : "px-4 mx-auto mb-8 max-w-screen-2xl"
       }
     >
-      {api.map((destination, index) => (
+      {api?.map((destination, index) => (
         <a
           href={`/destinations/${destination.id}`}
           className={`relative block overflow-hidden text-white transition-transform transform-gpu rounded shadow-lg cursor-pointer hover:text-blue-500 hover:scale-105 hover:shadow-2xl hover:brightness-110 ${

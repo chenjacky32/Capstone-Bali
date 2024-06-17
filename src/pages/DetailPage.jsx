@@ -5,9 +5,11 @@ import {
   unbookmarkDestination,
   getDestinationResponse,
   getBookmarkedDestinations,
+  addRating,
 } from "../libs/api";
 import { AuthContext } from "../context/AuthContext";
 import LoadingSpinner from "../components/LoadingSpinner";
+import ReactStars from "react-rating-stars-component";
 
 const DetailPage = () => {
   const { id } = useParams();
@@ -15,7 +17,27 @@ const DetailPage = () => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const { isLoggedIn } = useContext(AuthContext);
+  const [rating, setRating] = useState(0);
 
+  const ratingChanged = async (newRating) => {
+    setRating(newRating);
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      console.error("User is not authenticated.");
+      return;
+    }
+
+    try {
+      const response = await addRating(id, newRating, token);
+      if (response.status === "success") {
+        console.log("Rating added successfully");
+      } else {
+        console.error(response.message);
+      }
+    } catch (error) {
+      console.error("An error occurred while adding the rating.");
+    }
+  };
   useEffect(() => {
     const fetchDestination = async () => {
       try {
@@ -97,23 +119,36 @@ const DetailPage = () => {
           />
         </div>
 
-        {/* Row 2: Name and Bookmark Button */}
+        {/* Row 2: Name, Bookmark Button and Rating */}
         <div className="pb-6 mb-6 border-b-2">
-          <h2 className="mb-4 text-2xl font-bold text-gray-900">
+          <h2 className="text-2xl font-bold text-gray-900">
             {destination.name}
           </h2>
-          {isLoggedIn && (
-            <button
-              onClick={handleBookmark}
-              className={`px-4 py-2 text-white rounded ${
-                isBookmarked
-                  ? "bg-red-600 hover:bg-red-700"
-                  : "bg-gradient-to-r from-purple-600 to-blue-500"
-              }`}
-            >
-              {isBookmarked ? "Remove Bookmark" : "Add to Bookmark"}
-            </button>
-          )}
+          <div className="flex items-center justify-between space-x-4">
+            {isLoggedIn && (
+              <button
+                onClick={handleBookmark}
+                className={`px-4 py-2 text-white rounded ${
+                  isBookmarked
+                    ? "bg-red-600 hover:bg-red-700"
+                    : "bg-gradient-to-r from-purple-600 to-blue-500"
+                }`}
+              >
+                {isBookmarked ? "Remove Bookmark" : "Add to Bookmark"}
+              </button>
+            )}
+            <div>
+              <p className="mb-1 font-medium text-center text-gray-700">
+                Give Rating
+              </p>
+              <ReactStars
+                count={5}
+                onChange={ratingChanged}
+                size={36}
+                activeColor="#ffd700"
+              />
+            </div>
+          </div>
         </div>
 
         {/* Row 3: Description */}

@@ -38,6 +38,7 @@ const DetailPage = () => {
       console.error("An error occurred while adding the rating.");
     }
   };
+
   useEffect(() => {
     const fetchDestination = async () => {
       try {
@@ -137,17 +138,19 @@ const DetailPage = () => {
                 {isBookmarked ? "Remove Bookmark" : "Add to Bookmark"}
               </button>
             )}
-            <div>
-              <p className="mb-1 font-medium text-center text-gray-700">
-                Give Rating
-              </p>
-              <ReactStars
-                count={5}
-                onChange={ratingChanged}
-                size={36}
-                activeColor="#ffd700"
-              />
-            </div>
+            {isLoggedIn && (
+              <div>
+                <p className="mb-1 font-medium text-center text-gray-700">
+                  Give Rating
+                </p>
+                <ReactStars
+                  count={5}
+                  onChange={ratingChanged}
+                  size={36}
+                  activeColor="#ffd700"
+                />
+              </div>
+            )}
           </div>
         </div>
 

@@ -1,5 +1,4 @@
-// components/NavBar.jsx
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,13 +8,28 @@ import {
   faSignInAlt,
   faBars,
   faTimes,
+  faMoon,
+  faSun,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function NavBar() {
   const { isLoggedIn } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(
+    () => localStorage.getItem("theme") === "dark"
+  );
 
   const location = useLocation();
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [darkMode]);
 
   // Check if current path is '/login'
   if (location.pathname === "/login") {
@@ -26,8 +40,12 @@ export default function NavBar() {
     setIsOpen(!isOpen);
   };
 
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
+
   return (
-    <nav className="p-4 shadow-md bg-gradient-to-r from-purple-600 to-blue-500">
+    <nav className="p-4 shadow-md bg-gradient-to-r from-purple-600 to-blue-500 dark:from-gray-800 dark:to-black">
       <div className="container mx-auto">
         <div className="flex flex-col items-center justify-between lg:flex-row">
           <div className="mb-4 text-2xl font-bold text-white lg:mb-0">
@@ -35,12 +53,18 @@ export default function NavBar() {
               Explore Bali
             </Link>
           </div>
-          <div className="lg:hidden">
+          <div className="flex items-center lg:hidden">
             <button
               onClick={toggleMenu}
-              className="text-white focus:outline-none"
+              className="mr-4 text-white focus:outline-none"
             >
               <FontAwesomeIcon icon={isOpen ? faTimes : faBars} size="lg" />
+            </button>
+            <button
+              onClick={toggleDarkMode}
+              className="text-white focus:outline-none"
+            >
+              <FontAwesomeIcon icon={darkMode ? faSun : faMoon} size="lg" />
             </button>
           </div>
           <div
@@ -73,6 +97,16 @@ export default function NavBar() {
                   Login
                 </Link>
               )}
+              <button
+                onClick={toggleDarkMode}
+                className="flex items-center text-white hover:text-yellow-300 lg:ml-4"
+              >
+                <FontAwesomeIcon
+                  icon={darkMode ? faSun : faMoon}
+                  className="mr-4"
+                />
+                {darkMode ? "Light Mode" : "Dark Mode"}
+              </button>
             </div>
           </div>
         </div>

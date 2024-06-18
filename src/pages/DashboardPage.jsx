@@ -2,10 +2,14 @@ import React, { useState, useEffect, useContext } from "react";
 import { getBookmarkedDestinations } from "../libs/api";
 import { AuthContext } from "../context/AuthContext";
 import { Link } from "react-router-dom";
+import LogoutConfirmationModal from "../components/LogoutConfirmationModal";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function DashboardPage() {
   const [name, setName] = useState("");
   const [bookmarkedDestinations, setBookmarkedDestinations] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(true); // Loading state with delay
   const { logOut } = useContext(AuthContext);
 
   const handleLogout = () => {
@@ -13,58 +17,70 @@ export default function DashboardPage() {
     localStorage.removeItem("accessToken");
   };
 
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const confirmLogout = () => {
+    handleLogout();
+    closeModal();
+  };
+
   useEffect(() => {
-    const fetchUserDetails = async () => {
+    const fetchData = async () => {
       try {
         const accessToken = localStorage.getItem("accessToken");
-        const response = await fetch(
-          `${import.meta.env.VITE_REACT_APP_API_KEY}/users/me`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
+
+        // Simulate loading delay
+        setTimeout(async () => {
+          const userDetailsResponse = await fetch(
+            `${import.meta.env.VITE_REACT_APP_API_KEY}/users/me`,
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          );
+          const userDetails = await userDetailsResponse.json();
+          if (userDetails.status === "success") {
+            setName(userDetails.data.name);
           }
-        );
-        const data = await response.json();
-        if (data.status === "success") {
-          setName(data.data.name);
-        }
+
+          const bookmarkedResponse = await getBookmarkedDestinations(
+            accessToken
+          );
+          if (bookmarkedResponse.status === "success") {
+            setBookmarkedDestinations(bookmarkedResponse.data.Bookmarks);
+          }
+
+          setLoading(false); // Set loading to false after delay
+        }, 1000); // Simulated delay of 1 second
       } catch (error) {
-        console.error(
-          "An error occurred while fetching the user details.",
-          error
-        );
+        console.error("An error occurred while fetching data:", error);
+        setLoading(false); // Ensure loading state is set to false on error
       }
     };
 
-    const fetchBookmarkedDestinations = async () => {
-      try {
-        const accessToken = localStorage.getItem("accessToken");
-        const response = await getBookmarkedDestinations(accessToken);
-        if (response.status === "success") {
-          setBookmarkedDestinations(response.data.Bookmarks);
-        }
-      } catch (error) {
-        console.error(
-          "An error occurred while fetching the bookmarked destinations.",
-          error
-        );
-      }
-    };
-
-    fetchUserDetails();
-    fetchBookmarkedDestinations();
+    fetchData();
   }, []);
 
+  if (loading) {
+    return <LoadingSpinner />; // Show loading spinner while data is being fetched
+  }
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-100">
+    <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-100 bg-gradient-to-r dark:from-gray-800 dark:to-black">
       <div className="w-full max-w-4xl p-6 bg-white rounded-lg shadow-lg">
         <h1 className="mb-4 text-3xl font-bold text-gray-900">
           Welcome, {name}!
         </h1>
         <button
-          onClick={handleLogout}
-          className="px-4 py-2 mb-6 text-white rounded-md bg-gradient-to-r from-purple-600 to-blue-500 focus:outline-none focus:ring-2"
+          onClick={openModal}
+          className="px-4 py-2 mb-6 text-white rounded-md bg-gradient-to-r from-purple-600 to-blue-500 focus:outline-none focus:ring-2 dark:from-gray-800 dark:to-black"
         >
           Logout
         </button>
@@ -78,7 +94,7 @@ export default function DashboardPage() {
             </p>
             <Link
               to="/destinations"
-              className="inline-block px-4 py-2 mt-2 text-white rounded-md bg-gradient-to-r from-purple-600 to-blue-500 focus:outline-none focus:ring-2"
+              className="inline-block px-4 py-2 mt-2 text-white rounded-md bg-gradient-to-r from-purple-600 to-blue-500 focus:outline-none focus:ring-2 dark:from-gray-800 dark:to-black"
             >
               Explore Destinations
             </Link>
@@ -94,11 +110,6 @@ export default function DashboardPage() {
                   to={`/destinations/${destination.dest_id}`}
                   className="text-blue-600 hover:underline"
                 >
-                  <img
-                    src={destination.img}
-                    alt={destination.dest_name}
-                    className="object-cover w-full h-32"
-                  />
                   <div className="p-4">
                     <h3 className="mb-2 text-xl font-bold">
                       {destination.dest_name}
@@ -111,6 +122,11 @@ export default function DashboardPage() {
           </div>
         )}
       </div>
+      <LogoutConfirmationModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onConfirm={confirmLogout}
+      />
     </div>
   );
 }

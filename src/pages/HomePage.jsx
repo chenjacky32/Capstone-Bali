@@ -14,7 +14,7 @@ export default function HomePage() {
       {/* Hero Section */}
       <div
         id="description"
-        className="flex flex-col items-center justify-center h-screen p-6 text-center text-white bg-fixed bg-cover bg-gradient-to-r from-purple-600 to-blue-500"
+        className="flex flex-col items-center justify-center h-screen p-6 text-center text-white bg-fixed bg-cover from-purple-600 to-blue-500 bg-gradient-to-r dark:from-gray-800 dark:to-black"
       >
         <div className="container mx-auto">
           <div className="grid items-center grid-cols-1 gap-8 md:grid-cols-2">
@@ -57,14 +57,14 @@ export default function HomePage() {
       {/* Services Section */}
       <div
         id="services"
-        className="flex flex-col items-center justify-center min-h-screen py-20 text-center bg-gray-100"
+        className="flex flex-col items-center justify-center min-h-screen py-20 text-center bg-gray-100 bg-gradient-to-r dark:from-gray-800 dark:to-black"
       >
         <div className="container mx-auto">
           <Fade cascade damping={0.2} triggerOnce>
             <h2 className="mb-4 text-4xl font-bold text-indigo-700">
               SERVICES
             </h2>
-            <p className="max-w-2xl mx-auto mb-8 text-lg leading-relaxed text-gray-700">
+            <p className="max-w-2xl mx-auto mb-8 text-lg leading-relaxed text-gray-700 dark:text-white">
               <b>Destination App</b> provides various features that can help you
               find amazing travel ideas according to your wishes.
             </p>
@@ -73,14 +73,14 @@ export default function HomePage() {
         <div className="container grid flex-grow grid-cols-1 gap-8 mx-auto md:grid-cols-2">
           <Fade cascade damping={0.2} triggerOnce>
             {/* Destination List */}
-            <div className="p-4 bg-white rounded-lg shadow-lg">
-              <h3 className="mb-2 text-2xl font-bold text-indigo-700">
+            <div className="p-4 bg-white rounded-lg shadow-lg bg-gradient-to-r dark:from-gray-800 dark:to-black">
+              <h3 className="mb-2 text-2xl font-bold text-indigo-700 ">
                 Destination List
               </h3>
               <div className="flex justify-center mb-2">
-                <FaListUl className="w-24 h-24 py-4 text-indigo-700" />
+                <FaListUl className="w-24 h-24 py-4 text-indigo-700 dark:text-white" />
               </div>
-              <p className="text-gray-700">
+              <p className="text-gray-700 dark:text-white">
                 The <b>Destination List</b> feature provides a random list of
                 amazing tourist spots, ranging from mountains, beaches, and
                 historical sites.
@@ -88,14 +88,14 @@ export default function HomePage() {
             </div>
 
             {/* Search Destinations */}
-            <div className="p-4 bg-white rounded-lg shadow-lg">
+            <div className="p-4 bg-white rounded-lg shadow-lg bg-gradient-to-r dark:from-gray-800 dark:to-black">
               <h3 className="mb-2 text-2xl font-bold text-indigo-700">
                 Search Destinations
               </h3>
               <div className="flex justify-center mb-2">
-                <FaSearch className="w-24 h-24 py-4 text-indigo-700" />
+                <FaSearch className="w-24 h-24 py-4 text-indigo-700 dark:text-white" />
               </div>
-              <p className="text-gray-700">
+              <p className="text-gray-700 dark:text-white">
                 The <b>Search Destinations</b> feature provides a list of
                 tourist spots according to the desired location, type, or
                 activities available.
@@ -103,28 +103,28 @@ export default function HomePage() {
             </div>
 
             {/* Bookmark Destination */}
-            <div className="p-4 bg-white rounded-lg shadow-lg">
+            <div className="p-4 bg-white rounded-lg shadow-lg bg-gradient-to-r dark:from-gray-800 dark:to-black">
               <h3 className="mb-2 text-2xl font-bold text-indigo-700">
                 Bookmark Destination
               </h3>
               <div className="flex justify-center mb-2">
-                <FaRegBookmark className="w-24 h-24 py-4 text-indigo-700" />
+                <FaRegBookmark className="w-24 h-24 py-4 text-indigo-700 dark:text-white" />
               </div>
-              <p className="text-gray-700">
+              <p className="text-gray-700 dark:text-white">
                 The <b>Bookmark Destination</b> feature allows users to save
                 their favorite tourist spots for quick access later.
               </p>
             </div>
 
             {/* Rating Destination */}
-            <div className="p-4 bg-white rounded-lg shadow-lg">
-              <h3 className="mb-2 text-2xl font-bold text-indigo-700">
+            <div className="p-4 bg-white rounded-lg shadow-lg bg-gradient-to-r dark:from-gray-800 dark:to-black">
+              <h3 className="mb-2 text-2xl font-bold text-indigo-700 ">
                 Rating Destination
               </h3>
               <div className="flex justify-center mb-2">
-                <FaStar className="w-24 h-24 py-4 text-indigo-700" />
+                <FaStar className="w-24 h-24 py-4 text-indigo-700 dark:text-white" />
               </div>
-              <p className="text-gray-700">
+              <p className="text-gray-700 dark:text-white">
                 The <b>Rating Destination</b> feature allows users to provide
                 ratings and reviews for tourist spots they have visited.
               </p>
@@ -136,7 +136,7 @@ export default function HomePage() {
       {/* Gallery Section */}
       <div
         id="gallery"
-        className="flex flex-col items-center justify-center py-8 text-center bg-white"
+        className="flex flex-col items-center justify-center py-8 text-center bg-white bg-gradient-to-r dark:from-gray-800 dark:to-black"
       >
         <div className="container mx-auto">
           <Fade cascade damping={0.2} triggerOnce>

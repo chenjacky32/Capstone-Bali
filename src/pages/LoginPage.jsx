@@ -68,7 +68,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-600 to-blue-500">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-600 to-blue-500 dark:from-gray-800 dark:to-black">
       <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
         {/* Navigation back to /destinations */}
         <button
@@ -127,7 +127,7 @@ export default function LoginPage() {
           </div>
           <button
             type="submit"
-            className="w-full px-4 py-2 text-white transition duration-200 rounded bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-purple-600"
+            className="w-full px-4 py-2 text-white transition duration-200 rounded bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-purple-600 dark:from-gray-800 dark:to-black"
           >
             {isLogin ? "Login" : "Register"}
           </button>

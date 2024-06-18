@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import DestinationList from "../components/DestinationList";
 import { getDestinationResponse } from "../libs/api";
-import Header from "../components/Header";
 import ToggleDisplayMode from "../components/ToggleDisplayMode";
 import SearchBar from "../components/SearchBar";
 import LoadingSpinner from "../components/LoadingSpinner";
@@ -46,7 +45,7 @@ export default function DestinationPage() {
   }
 
   return (
-    <>
+    <div className="bg-white bg-gradient-to-r dark:from-gray-800 dark:to-black">
       {/* Header, Search Bar, and Mode Toggle */}
       <section>
         {/* <Header title="Destinations" /> */}
@@ -61,6 +60,6 @@ export default function DestinationPage() {
       <section>
         <DestinationList api={filteredDestinations} displayMode={displayMode} />
       </section>
-    </>
+    </div>
   );
 }

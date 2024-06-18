@@ -2,15 +2,30 @@ import React, { useState, useEffect, useContext } from "react";
 import { getBookmarkedDestinations } from "../libs/api";
 import { AuthContext } from "../context/AuthContext";
 import { Link } from "react-router-dom";
+import LogoutConfirmationModal from "../components/LogoutConfirmationModal";
 
 export default function DashboardPage() {
   const [name, setName] = useState("");
   const [bookmarkedDestinations, setBookmarkedDestinations] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { logOut } = useContext(AuthContext);
 
   const handleLogout = () => {
     logOut();
     localStorage.removeItem("accessToken");
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const confirmLogout = () => {
+    handleLogout();
+    closeModal();
   };
 
   useEffect(() => {
@@ -57,14 +72,14 @@ export default function DashboardPage() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-100">
+    <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-100 bg-gradient-to-r dark:from-gray-800 dark:to-black">
       <div className="w-full max-w-4xl p-6 bg-white rounded-lg shadow-lg">
         <h1 className="mb-4 text-3xl font-bold text-gray-900">
           Welcome, {name}!
         </h1>
         <button
-          onClick={handleLogout}
-          className="px-4 py-2 mb-6 text-white rounded-md bg-gradient-to-r from-purple-600 to-blue-500 focus:outline-none focus:ring-2"
+          onClick={openModal}
+          className="px-4 py-2 mb-6 text-white rounded-md bg-gradient-to-r from-purple-600 to-blue-500 focus:outline-none focus:ring-2 dark:from-gray-800 dark:to-black"
         >
           Logout
         </button>
@@ -78,7 +93,7 @@ export default function DashboardPage() {
             </p>
             <Link
               to="/destinations"
-              className="inline-block px-4 py-2 mt-2 text-white rounded-md bg-gradient-to-r from-purple-600 to-blue-500 focus:outline-none focus:ring-2"
+              className="inline-block px-4 py-2 mt-2 text-white rounded-md bg-gradient-to-r from-purple-600 to-blue-500 focus:outline-none focus:ring-2 dark:from-gray-800 dark:to-black"
             >
               Explore Destinations
             </Link>
@@ -94,11 +109,6 @@ export default function DashboardPage() {
                   to={`/destinations/${destination.dest_id}`}
                   className="text-blue-600 hover:underline"
                 >
-                  <img
-                    src={destination.img}
-                    alt={destination.dest_name}
-                    className="object-cover w-full h-32"
-                  />
                   <div className="p-4">
                     <h3 className="mb-2 text-xl font-bold">
                       {destination.dest_name}
@@ -111,6 +121,11 @@ export default function DashboardPage() {
           </div>
         )}
       </div>
+      <LogoutConfirmationModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onConfirm={confirmLogout}
+      />
     </div>
   );
 }

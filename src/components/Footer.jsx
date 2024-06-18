@@ -18,7 +18,7 @@ export default function Footer() {
   }
 
   return (
-    <footer className="py-8 text-white bg-gradient-to-r from-purple-600 to-blue-500">
+    <footer className="py-8 text-white bg-gradient-to-r from-purple-600 to-blue-500 dark:from-gray-800 dark:to-black dark:outline">
       <div className="container flex flex-col items-center justify-between mx-auto space-y-8 md:flex-row md:space-y-0">
         {/* Logo and Description */}
         <div className="w-full text-center md:w-auto md:text-left">

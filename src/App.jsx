@@ -15,7 +15,7 @@ const NotFoundPage = React.lazy(() => import("./pages/NotFoundPage"));
 
 export default function App() {
   return (
-    <div className="flex flex-col min-h-screen bg-color-dark">
+    <div className="flex flex-col min-h-screen bg-white bg-gradient-to-r dark:from-gray-800 dark:to-black">
       <NavBar />
       <main className="flex-grow">
         {/* Use Suspense to display a fallback while components are loading */}

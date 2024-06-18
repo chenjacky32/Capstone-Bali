@@ -3,11 +3,13 @@ import { getBookmarkedDestinations } from "../libs/api";
 import { AuthContext } from "../context/AuthContext";
 import { Link } from "react-router-dom";
 import LogoutConfirmationModal from "../components/LogoutConfirmationModal";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function DashboardPage() {
   const [name, setName] = useState("");
   const [bookmarkedDestinations, setBookmarkedDestinations] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(true); // Loading state with delay
   const { logOut } = useContext(AuthContext);
 
   const handleLogout = () => {
@@ -29,47 +31,46 @@ export default function DashboardPage() {
   };
 
   useEffect(() => {
-    const fetchUserDetails = async () => {
+    const fetchData = async () => {
       try {
         const accessToken = localStorage.getItem("accessToken");
-        const response = await fetch(
-          `${import.meta.env.VITE_REACT_APP_API_KEY}/users/me`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
+
+        // Simulate loading delay
+        setTimeout(async () => {
+          const userDetailsResponse = await fetch(
+            `${import.meta.env.VITE_REACT_APP_API_KEY}/users/me`,
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          );
+          const userDetails = await userDetailsResponse.json();
+          if (userDetails.status === "success") {
+            setName(userDetails.data.name);
           }
-        );
-        const data = await response.json();
-        if (data.status === "success") {
-          setName(data.data.name);
-        }
+
+          const bookmarkedResponse = await getBookmarkedDestinations(
+            accessToken
+          );
+          if (bookmarkedResponse.status === "success") {
+            setBookmarkedDestinations(bookmarkedResponse.data.Bookmarks);
+          }
+
+          setLoading(false); // Set loading to false after delay
+        }, 1000); // Simulated delay of 1 second
       } catch (error) {
-        console.error(
-          "An error occurred while fetching the user details.",
-          error
-        );
+        console.error("An error occurred while fetching data:", error);
+        setLoading(false); // Ensure loading state is set to false on error
       }
     };
 
-    const fetchBookmarkedDestinations = async () => {
-      try {
-        const accessToken = localStorage.getItem("accessToken");
-        const response = await getBookmarkedDestinations(accessToken);
-        if (response.status === "success") {
-          setBookmarkedDestinations(response.data.Bookmarks);
-        }
-      } catch (error) {
-        console.error(
-          "An error occurred while fetching the bookmarked destinations.",
-          error
-        );
-      }
-    };
-
-    fetchUserDetails();
-    fetchBookmarkedDestinations();
+    fetchData();
   }, []);
+
+  if (loading) {
+    return <LoadingSpinner />; // Show loading spinner while data is being fetched
+  }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-100 bg-gradient-to-r dark:from-gray-800 dark:to-black">

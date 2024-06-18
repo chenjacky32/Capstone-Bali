@@ -10,7 +10,6 @@ import {
 import { AuthContext } from "../context/AuthContext";
 import LoadingSpinner from "../components/LoadingSpinner";
 import ReactStars from "react-rating-stars-component";
-import { HiLocationMarker } from "react-icons/hi";
 import Modal from "../components/Modal";
 
 export default function DetailPage() {
@@ -18,6 +17,7 @@ export default function DetailPage() {
   const [destination, setDestination] = useState(null);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingDetail, setIsLoadingDetail] = useState(true); // New loading state for detail
   const { isLoggedIn } = useContext(AuthContext);
   const [rating, setRating] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -46,32 +46,33 @@ export default function DetailPage() {
   useEffect(() => {
     const fetchDestination = async () => {
       try {
-        // Fetch destination details
-        const response = await getDestinationResponse(`destinations/${id}`);
-        if (response.status === "success") {
-          setDestination(response.data);
-        } else {
-          console.error(response.message);
-        }
+        // Simulate loading delay
+        setTimeout(async () => {
+          const response = await getDestinationResponse(`destinations/${id}`);
+          if (response.status === "success") {
+            setDestination(response.data);
+          } else {
+            console.error(response.message);
+          }
 
-        if (isLoggedIn) {
-          // Fetch user's bookmarked destinations
-          const token = localStorage.getItem("accessToken");
-          if (token) {
-            const bookmarkedResponse = await getBookmarkedDestinations(token);
-            if (bookmarkedResponse.status === "success") {
-              // Check if the current destination is bookmarked
-              const bookmarked = bookmarkedResponse.data.Bookmarks.some(
-                (bookmark) => bookmark.dest_id === id
-              );
-              setIsBookmarked(bookmarked);
+          if (isLoggedIn) {
+            const token = localStorage.getItem("accessToken");
+            if (token) {
+              const bookmarkedResponse = await getBookmarkedDestinations(token);
+              if (bookmarkedResponse.status === "success") {
+                const bookmarked = bookmarkedResponse.data.Bookmarks.some(
+                  (bookmark) => bookmark.dest_id === id
+                );
+                setIsBookmarked(bookmarked);
+              }
             }
           }
-        }
+        }, 1000); // Simulated delay of 1 second
       } catch (error) {
         console.error("An error occurred while fetching the destination.");
       } finally {
-        setIsLoading(false); // Set loading to false once data is fetched (success or error)
+        setIsLoading(false); // Set general loading to false
+        setIsLoadingDetail(false); // Set detail loading to false
       }
     };
 
@@ -100,16 +101,12 @@ export default function DetailPage() {
     }
   };
 
-  if (isLoading) {
+  if (isLoading || isLoadingDetail) {
     return <LoadingSpinner />; // Show loading spinner while data is being fetched
   }
 
   if (!destination) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        Error: Destination not found
-      </div>
-    );
+    return <LoadingSpinner />;
   }
 
   return (

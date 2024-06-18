@@ -1,35 +1,3 @@
 {
-  "routes": [
-    { "src": "/api/register", "dest": "${VITE_REACT_APP_API_KEY}/register" },
-    { "src": "/api/login", "dest": "${VITE_REACT_APP_API_KEY}/login" },
-    { "src": "/api/users/me", "dest": "${VITE_REACT_APP_API_KEY}/users/me" },
-    {
-      "src": "/api/destinations",
-      "dest": "${VITE_REACT_APP_API_KEY}/destinations"
-    },
-    {
-      "src": "/api/destinations/([^/]+)",
-      "dest": "${VITE_REACT_APP_API_KEY}/destinations/[id]"
-    },
-    {
-      "src": "/api/destinations/([^/]+)/bookmarks",
-      "dest": "${VITE_REACT_APP_API_KEY}/destinations/[dest_id]/bookmarks"
-    },
-    {
-      "src": "/api/destinations/([^/]+)/unbookmarked",
-      "dest": "${VITE_REACT_APP_API_KEY}/destinations/[dest_id]/unbookmarked"
-    },
-    {
-      "src": "/api/destinations/bookmarks",
-      "dest": "${VITE_REACT_APP_API_KEY}/destinations/bookmarks"
-    },
-    {
-      "src": "/api/destinations/unbookmarked",
-      "dest": "${VITE_REACT_APP_API_KEY}/destinations/unbookmarked"
-    },
-    {
-      "src": "/api/destinations/([^/]+)/ratings",
-      "dest": "${VITE_REACT_APP_API_KEY}/destinations/[dest_id]/ratings"
-    }
-  ]
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
 }

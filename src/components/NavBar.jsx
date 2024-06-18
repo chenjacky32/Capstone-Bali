@@ -1,30 +1,80 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext"; // Import the context
+// components/NavBar.jsx
+import React, { useState, useContext } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faMapMarkedAlt,
+  faUser,
+  faSignInAlt,
+  faBars,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function NavBar() {
-  const { isLoggedIn } = useContext(AuthContext); // Access the login state
+  const { isLoggedIn } = useContext(AuthContext);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const location = useLocation();
+
+  // Check if current path is '/login'
+  if (location.pathname === "/login") {
+    return null; // Return null to render nothing when on the login page
+  }
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
-    <nav className="p-4 bg-gray-800">
-      <div className="container flex items-center justify-between mx-auto">
-        <div className="text-xl font-bold text-white">Explore Bali</div>
-        <div className="space-x-4">
-          <Link to="/" className="text-white hover:text-gray-400">
-            Home
-          </Link>
-          <Link to="/destinations" className="text-white hover:text-gray-400">
-            Destination
-          </Link>
-          {isLoggedIn ? (
-            <Link to="/dashboard" className="text-white hover:text-gray-400">
-              Dashboard
+    <nav className="p-4 shadow-md bg-gradient-to-r from-purple-600 to-blue-500">
+      <div className="container mx-auto">
+        <div className="flex flex-col items-center justify-between lg:flex-row">
+          <div className="mb-4 text-2xl font-bold text-white lg:mb-0">
+            <Link to="/" className="flex items-center text-white">
+              Explore Bali
             </Link>
-          ) : (
-            <Link to="/login" className="text-white hover:text-gray-400">
-              Login
-            </Link>
-          )}
+          </div>
+          <div className="lg:hidden">
+            <button
+              onClick={toggleMenu}
+              className="text-white focus:outline-none"
+            >
+              <FontAwesomeIcon icon={isOpen ? faTimes : faBars} size="lg" />
+            </button>
+          </div>
+          <div
+            className={`w-full lg:w-auto lg:flex ${
+              isOpen ? "block" : "hidden"
+            }`}
+          >
+            <div className="flex flex-col mt-4 space-y-4 lg:flex-row lg:mt-0 lg:space-x-8 lg:space-y-0">
+              <Link
+                to="/destinations"
+                className="flex items-center text-white hover:text-yellow-300"
+              >
+                <FontAwesomeIcon icon={faMapMarkedAlt} className="mr-3" />
+                Destination
+              </Link>
+              {isLoggedIn ? (
+                <Link
+                  to="/dashboard"
+                  className="flex items-center text-white hover:text-yellow-300"
+                >
+                  <FontAwesomeIcon icon={faUser} className="mr-4" />
+                  Dashboard
+                </Link>
+              ) : (
+                <Link
+                  to="/login"
+                  className="flex items-center text-white hover:text-yellow-300"
+                >
+                  <FontAwesomeIcon icon={faSignInAlt} className="mr-4" />
+                  Login
+                </Link>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </nav>

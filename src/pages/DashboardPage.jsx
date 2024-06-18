@@ -1,48 +1,116 @@
 import React, { useState, useEffect, useContext } from "react";
-import axios from "axios";
+import { getBookmarkedDestinations } from "../libs/api";
 import { AuthContext } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
 export default function DashboardPage() {
   const [name, setName] = useState("");
-  const { logOut } = useContext(AuthContext); // Access the logOut function
+  const [bookmarkedDestinations, setBookmarkedDestinations] = useState([]);
+  const { logOut } = useContext(AuthContext);
 
   const handleLogout = () => {
-    logOut(); // Call the logOut function
-    localStorage.removeItem("accessToken"); // Remove the access token from local storage
+    logOut();
+    localStorage.removeItem("accessToken");
   };
 
   useEffect(() => {
-    const fetchName = async () => {
+    const fetchUserDetails = async () => {
       try {
         const accessToken = localStorage.getItem("accessToken");
-        const response = await axios.get("http://localhost:3000/users/me", {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-
-        if (response.data.status === "success") {
-          setName(response.data.data.name);
+        const response = await fetch(
+          `${import.meta.env.VITE_REACT_APP_API_KEY}/users/me`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        const data = await response.json();
+        if (data.status === "success") {
+          setName(data.data.name);
         }
       } catch (error) {
-        console.error("An error occurred while fetching the name.", error);
+        console.error(
+          "An error occurred while fetching the user details.",
+          error
+        );
       }
     };
 
-    fetchName();
+    const fetchBookmarkedDestinations = async () => {
+      try {
+        const accessToken = localStorage.getItem("accessToken");
+        const response = await getBookmarkedDestinations(accessToken);
+        if (response.status === "success") {
+          setBookmarkedDestinations(response.data.Bookmarks);
+        }
+      } catch (error) {
+        console.error(
+          "An error occurred while fetching the bookmarked destinations.",
+          error
+        );
+      }
+    };
+
+    fetchUserDetails();
+    fetchBookmarkedDestinations();
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="mb-4 text-2xl font-bold text-gray-900">
-        Welcome, {name}!
-      </h1>
-      <button
-        onClick={handleLogout}
-        className="px-4 py-2 text-white transition duration-200 bg-blue-600 rounded hover:bg-blue-700"
-      >
-        Logout
-      </button>
+    <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-100">
+      <div className="w-full max-w-4xl p-6 bg-white rounded-lg shadow-lg">
+        <h1 className="mb-4 text-3xl font-bold text-gray-900">
+          Welcome, {name}!
+        </h1>
+        <button
+          onClick={handleLogout}
+          className="px-4 py-2 mb-6 text-white rounded-md bg-gradient-to-r from-purple-600 to-blue-500 focus:outline-none focus:ring-2"
+        >
+          Logout
+        </button>
+        <h2 className="mb-4 text-2xl font-bold text-gray-900">
+          Bookmarked Destinations
+        </h2>
+        {bookmarkedDestinations.length === 0 ? (
+          <div className="p-4">
+            <p className="text-lg text-gray-600">
+              Start Bookmarking Your Favorite Destinations!
+            </p>
+            <Link
+              to="/destinations"
+              className="inline-block px-4 py-2 mt-2 text-white rounded-md bg-gradient-to-r from-purple-600 to-blue-500 focus:outline-none focus:ring-2"
+            >
+              Explore Destinations
+            </Link>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {bookmarkedDestinations.map((destination) => (
+              <div
+                key={destination.dest_id}
+                className="overflow-hidden bg-white rounded-lg shadow-md"
+              >
+                <Link
+                  to={`/destinations/${destination.dest_id}`}
+                  className="text-blue-600 hover:underline"
+                >
+                  <img
+                    src={destination.img}
+                    alt={destination.dest_name}
+                    className="object-cover w-full h-32"
+                  />
+                  <div className="p-4">
+                    <h3 className="mb-2 text-xl font-bold">
+                      {destination.dest_name}
+                    </h3>
+                    <p className="mb-2 text-gray-600">{destination.location}</p>
+                  </div>
+                </Link>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

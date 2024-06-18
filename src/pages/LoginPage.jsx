@@ -1,25 +1,35 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { AiOutlineArrowLeft } from "react-icons/ai"; // Import the arrow left icon
 
-const LoginPage = () => {
+export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState(""); // Add this for the register form
   const [isLogin, setIsLogin] = useState(true); // Add this to toggle between login and register
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { logIn } = useContext(AuthContext); // Access the logIn function
+  const { isLoggedIn, logIn } = useContext(AuthContext); // Access the isLoggedIn and logIn function
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/destinations"); // Redirect to another page if logged in
+    }
+  }, [isLoggedIn, navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:3000/login", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_REACT_APP_API_KEY}/login`,
+        {
+          email,
+          password,
+        }
+      );
 
       if (response.data.status === "success") {
         localStorage.setItem("accessToken", response.data.data.accessToken);
@@ -37,11 +47,14 @@ const LoginPage = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:3000/register", {
-        name,
-        email,
-        password,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_REACT_APP_API_KEY}/register`,
+        {
+          name,
+          email,
+          password,
+        }
+      );
 
       if (response.data.status === "success") {
         setIsLogin(true);
@@ -55,9 +68,18 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-8 bg-white border border-gray-300 rounded-lg">
-        <h2 className="mb-6 text-2xl font-bold text-gray-900">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-600 to-blue-500">
+      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
+        {/* Navigation back to /destinations */}
+        <button
+          onClick={() => navigate("/destinations")}
+          className="absolute p-10 text-white hover:text-yellow-300 top-4 left-4"
+        >
+          <AiOutlineArrowLeft className="inline-block mr-2 text-xl" />
+          Back to Destinations
+        </button>
+        {/* End navigation button */}
+        <h2 className="mb-6 text-3xl font-bold text-center text-gray-900">
           {isLogin ? "Login" : "Register"}
         </h2>
         {error && <div className="mb-4 text-red-600">{error}</div>}
@@ -72,7 +94,7 @@ const LoginPage = () => {
                 id="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded"
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-600"
                 required
               />
             </div>
@@ -86,7 +108,7 @@ const LoginPage = () => {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-600"
               required
             />
           </div>
@@ -99,27 +121,43 @@ const LoginPage = () => {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-600"
               required
             />
           </div>
           <button
             type="submit"
-            className="w-full px-4 py-2 text-white transition duration-200 bg-blue-600 rounded hover:bg-blue-700"
+            className="w-full px-4 py-2 text-white transition duration-200 rounded bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-purple-600"
           >
             {isLogin ? "Login" : "Register"}
           </button>
-          <button
-            type="button"
-            onClick={() => setIsLogin(!isLogin)}
-            className="w-full px-4 py-2 mt-4 text-white transition duration-200 bg-gray-600 rounded hover:bg-gray-700"
-          >
-            {isLogin ? "Switch to Register" : "Login"}
-          </button>
+          {/* Conditionally render the "Don't have an account?" and "Already have an account?" text */}
+          {isLogin && (
+            <p className="mt-4 text-center text-gray-700">
+              Don't have an account?{" "}
+              <button
+                type="button"
+                onClick={() => setIsLogin(false)}
+                className="text-purple-600 hover:underline focus:outline-none"
+              >
+                Register Now
+              </button>
+            </p>
+          )}
+          {!isLogin && (
+            <p className="mt-4 text-center text-gray-700">
+              Already have an account?{" "}
+              <button
+                type="button"
+                onClick={() => setIsLogin(true)}
+                className="text-purple-600 hover:underline focus:outline-none"
+              >
+                Login Now
+              </button>
+            </p>
+          )}
         </form>
       </div>
     </div>
   );
-};
-
-export default LoginPage;
+}

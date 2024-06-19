@@ -1,7 +1,7 @@
 # Explore Bali 
 
 <div align="center">
-  <img style="" alt="Explore Bali" />
+  <img alt="Explore Bali" src="https://img.freepik.com/premium-vector/summer-day-silhouette-vector-illustration-set_701806-5974.jpg?w=740" width="150px" height="150px" />
   <p>To Do List Website Pariwisata Bali</p>
   <p>untuk mendapatkan informasi mengenai destinasi pariwisata yang ada di Provinsi Bali, dan pengguna dapat mengakses fitur tambahan berupa menambahkan destinasi 
      kedalam todo list dan rekomendasi wisata kepada sesama pengguna dengan memberikan rating pada wisata tersebut
@@ -50,7 +50,7 @@ https://github.com/chenjacky32/Capstone-Bali_API.git
 https://dokumentasi-capstone-bali-bn2q.vercel.app/#/?id=base-url
 
 ## Video Presentation
-
+https://youtu.be/aELvCDglOyI
 
 
 ## Library or External Repository/API used : 
@@ -67,8 +67,12 @@ https://dokumentasi-capstone-bali-bn2q.vercel.app/#/?id=base-url
 
 
 ## Slide Presentation
-
+https://docs.google.com/presentation/d/1MqhvClAauRN9p1R3l8suhz26oW3QO_g9lfIbOOhPGnw/edit?usp=sharing
 
 
 ## Video Demo
+https://youtu.be/0P11WQOBFGQ
 
+
+## Dokumen Tutorial Penggunaan Website 
+https://docs.google.com/document/d/1uSItucTQzV8R9xlaIJ82vQapHchu0GbWbWYxbdMLhXM/edit?usp=sharing

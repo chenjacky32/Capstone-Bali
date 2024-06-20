@@ -11,6 +11,7 @@ import { AuthContext } from "../context/AuthContext";
 import LoadingSpinner from "../components/LoadingSpinner";
 import ReactStars from "react-rating-stars-component";
 import Modal from "../components/Modal";
+import ToTitleCase from "../utils/ToTitleCase";
 
 export default function DetailPage() {
   const { id } = useParams();
@@ -124,7 +125,7 @@ export default function DetailPage() {
         {/* Row 2: Name, Bookmark Button and Rating */}
         <div className="pb-6 mb-6 border-b-2">
           <h2 className="text-2xl font-bold text-gray-900">
-            {destination.name}
+            {ToTitleCase(destination.name)}
           </h2>
           <div className="flex items-center justify-between space-x-4">
             {isLoggedIn && (

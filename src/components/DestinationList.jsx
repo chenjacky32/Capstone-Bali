@@ -1,6 +1,7 @@
 import React from "react";
 import { HiLocationMarker } from "react-icons/hi";
 import { FaStar } from "react-icons/fa";
+import ToTitleCase from "../utils/ToTitleCase";
 
 export default function DestinationList({ api, displayMode }) {
   return (
@@ -38,7 +39,7 @@ export default function DestinationList({ api, displayMode }) {
                 displayMode === "list" ? "h-14" : ""
               }`}
             >
-              {destination.name}
+              {ToTitleCase(destination.name)}
             </div>
             <div className="absolute inset-0 flex items-center justify-center text-2xl font-bold transition-opacity bg-black bg-opacity-50 opacity-0 hover:opacity-75">
               Explore Now

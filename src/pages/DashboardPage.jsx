@@ -4,6 +4,7 @@ import { AuthContext } from "../context/AuthContext";
 import { Link } from "react-router-dom";
 import LogoutConfirmationModal from "../components/LogoutConfirmationModal";
 import LoadingSpinner from "../components/LoadingSpinner";
+import ToTitleCase from "../utils/ToTitleCase";
 
 export default function DashboardPage() {
   const [name, setName] = useState("");
@@ -112,7 +113,7 @@ export default function DashboardPage() {
                 >
                   <div className="p-4">
                     <h3 className="mb-2 text-xl font-bold">
-                      {destination.dest_name}
+                      {ToTitleCase(destination.dest_name)}
                     </h3>
                     <p className="mb-2 text-gray-600">{destination.location}</p>
                   </div>
